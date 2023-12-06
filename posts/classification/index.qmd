@@ -1,0 +1,111 @@
+---
+title: "Classification in Data Analytics"
+author: "Sahil Sharma"
+date: "2023-11-21"
+categories: [Analysis, Visualization, Classification]
+image: "thumbnail.png"
+jupyter: python3
+---
+
+# Classifying Iris Flowers with Python: Exploring Floral Diversity
+
+## Introduction
+
+The Iris dataset is a cornerstone of machine learning, offering insights into the diverse world of Iris flowers. In this blog post, we delve into the analysis of this dataset, focusing on classifying Iris flowers using Python's Scikit-learn library. Through visualization and classification techniques, we aim to unravel the patterns within this floral dataset.
+
+### Unveiling Iris Flower Secrets: K-Nearest Neighbors Classification
+
+The Iris dataset, comprising information about three distinct iris species, has long served as a cornerstone for machine learning algorithms. In this blog post, we delve into the intricacies of K-Nearest Neighbors (KNN) classification to unlock the secrets hidden within the Iris flower data.
+
+### Data Preparation: Building the Foundation
+
+We begin by loading the Iris dataset using sklearn.datasets and convert it into a Pandas DataFrame for ease of manipulation. Next, we separate the features (sepal and petal length and width) from the target variable (iris species) to prepare the data for training and testing our classifier.
+
+```{python}
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import matplotlib.pyplot as plt
+
+# Load Iris dataset
+iris = load_iris()
+
+# Create a DataFrame from the Iris dataset
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['target'] = iris.target
+
+# Split the data into features (X) and target variable (y)
+X = iris_df.drop('target', axis=1)
+y = iris_df['target']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+```
+
+### KNN: Understanding the Neighborhood
+
+K-Nearest Neighbors, a powerful yet intuitive algorithm, classifies new data points based on their similarity to existing data points. It considers a predefined number of "nearest neighbors" (k) and assigns the new point to the majority class within that neighborhood.
+
+Here, we initialize the KNN classifier with n_neighbors=3, meaning it will consider the three closest data points when making predictions.
+
+### Training and Prediction: Unveiling the Hidden Knowledge
+
+We split the prepared data into training and testing sets. The training set serves to teach the KNN algorithm the relationship between features and species, while the testing set evaluates its ability to generalize to unseen data.
+
+The trained classifier then predicts the species of each iris flower in the testing set based on its features and the learned knowledge from the training data.
+
+### Evaluating Performance: Measuring the Accuracy
+
+Accuracy score measures the proportion of correctly classified data points. The provided code calculates and prints the accuracy of our KNN model, offering a quantitative assessment of its performance.
+
+### Classification Report: Deeper Insights
+
+Classification report provides a detailed breakdown of the model's performance, including precision, recall, and F1 score for each class. This allows us to identify potential biases and areas for improvement.
+
+```{python}
+# Initialize the K-Nearest Neighbors classifier
+knn = KNeighborsClassifier(n_neighbors=3)
+
+# Train the classifier
+knn.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = knn.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
+
+# Generate classification report
+print(classification_report(y_test, y_pred, target_names=iris.target_names))
+```
+
+### Visualization of Classification Results
+A scatter plot helps visualize the predicted classes of the iris flowers. Different colors represent different species, allowing us to visually assess whether the model successfully captured the separation between classes based on their features.
+
+```{python}
+# Visualizing the results
+plt.figure(figsize=(8, 6))
+
+# Scatter plot for feature comparison
+plt.scatter(X_test.iloc[:, 0], X_test.iloc[:, 1], c=y_pred, cmap='viridis', edgecolor='k')
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.title('Predicted Classes')
+plt.colorbar(label='Class')
+plt.show()
+
+```
+
+### Insights from the Analysis
+The accuracy score and classification report shed light on the model's performance, while the scatter plot visualization offers a glimpse into the separability of Iris species based on Sepal Length and Width.
+
+## Conclusion
+
+K-Nearest Neighbors provides a powerful tool for classifying data based on its similarity to existing data points. By leveraging this algorithm, we successfully unveiled the hidden secrets within the Iris dataset, accurately classifying the different iris species based on their features.
+
+This blog post has provided a glimpse into the workings of KNN classification and its application to the Iris dataset. By understanding its core principles and interpreting the results, we gain valuable insights into data classification and its potential for unlocking hidden knowledge in various domains.
+
+

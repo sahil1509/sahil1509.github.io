@@ -1,0 +1,33 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/sahilsharma07
+    - icon: github
+      text: Github
+      href: https://github.com/sahil1509
+
+---
+
+# About
+
+:::{#hero-heading}
+
+Sahil Sharma is a Masters of Engineering Student at Virginia Tech studying Computer Science and Applications.
+
+## Education
+
+**Virginia Tech** | *Blacksburg, VA*
+
+MEng in Computer Science & Applications | Aug 2023 - May 2025
+
+**Thapar University** | *Patiala, India*
+
+B.E. in Computer Science | Aug 2016 - May 2020
+
+:::
+

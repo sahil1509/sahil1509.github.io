@@ -1,0 +1,126 @@
+---
+title: "Clustering in Data Analytics"
+author: "Sahil Sharma"
+date: "2023-11-07"
+categories: [Analysis, Visualization, Clustering]
+image: "clustering.png"
+jupyter: python3
+---
+
+
+# Clustering Iris Data with K-Means Algorithm
+
+
+## Introduction
+
+Clustering is an unsupervised learning technique that groups data points together based on their similarities. It is a useful tool for exploring data and identifying patterns. The k-means algorithm is a popular clustering algorithm that works by assigning data points to a predefined number of clusters (k).
+
+## Why Clustering Matters ?
+ 
+Clustering is a versatile tool used for a wide range of applications, including:
+
+Customer segmentation: Clustering can be used to identify groups of customers with similar characteristics, enabling targeted marketing campaigns and personalized product recommendations.
+
+Image segmentation: Clustering can be used to segment images into different regions, such as identifying objects or segmenting tissues in medical imaging.
+
+Anomaly detection: Clustering can be used to identify outliers or anomalous data points that deviate from the typical patterns in the data.
+
+Exploratory data analysis: Clustering can be used to explore and visualize the underlying structure and relationships within a dataset.
+
+## Common Clustering Algorithms
+
+Numerous clustering algorithms exist, each with its own strengths and limitations. Some popular clustering algorithms include:
+
+K-means clustering: This algorithm partitions the data into a predefined number of clusters (k) by iteratively assigning data points to the nearest cluster centroid.
+
+Hierarchical clustering: This algorithm builds a hierarchy of clusters by recursively merging or splitting data points based on their similarity.
+
+Density-based spatial clustering of applications with noise (DBSCAN): This algorithm identifies clusters based on the density of data points, marking outliers as points that lie in low-density regions.
+
+In this blog post, we will use the k-means algorithm to cluster the Iris dataset. The Iris dataset is a popular benchmark dataset that consists of 150 samples of iris flowers, each belonging to one of three species: Iris setosa, Iris versicolor, and Iris virginica. Each sample is characterized by four features: sepal length, sepal width, petal length, and petal width.
+
+### Importing Libraries
+
+We will need to import the following libraries into our Python script:
+
+```{python}
+import pandas as pd
+from sklearn.cluster import KMeans
+from matplotlib import pyplot as plt
+```
+
+### Loading and Preprocessing Data
+
+We will load the Iris dataset using pandas and preprocess the data by standardizing the features.
+
+### Load the Iris dataset
+
+```{python}
+data = pd.read_csv('iris.csv')
+```
+
+### Preprocess the data
+
+```{python}
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']])
+```
+
+### Clustering with K-Means
+
+We will now use the k-means algorithm to cluster the data. We will set the number of clusters to three, as there are three species of iris flowers in the dataset.
+
+### Create a KMeans object with k=3 clusters
+
+```{python}
+kmeans = KMeans(n_clusters=3)
+```
+
+### Fit the KMeans model to the data
+
+```{python}
+kmeans.fit(data_scaled)
+```
+
+### Evaluating Clustering Results
+
+We can evaluate the clustering results by calculating the silhouette score. The silhouette score is a measure of how well each data point is clustered.
+
+```{python}
+from sklearn.metrics import silhouette_score
+```
+
+### Calculate the silhouette score
+
+```{python}
+silhouette_avg = silhouette_score(data_scaled, kmeans.labels_)
+print('Silhouette score:', silhouette_avg)
+```
+
+### Vizualising CLusters
+
+We can visualize the clusters by plotting the data points in two dimensions.
+
+```{python}
+# Extract the first two principal components
+from sklearn.decomposition import PCA
+pca = PCA(n_components=2)
+pca_data = pca.fit_transform(data_scaled)
+
+# Plot the data points in two dimensions
+plt.scatter(pca_data[:, 0], pca_data[:, 1], c=kmeans.labels_)
+plt.title('Clustered Iris Data')
+plt.show()
+```
+
+
+## Conclusion
+
+In this blog post, we have used the k-means algorithm to cluster the Iris dataset. We have also evaluated the clustering results and visualized the clusters. Clustering is a powerful tool for data exploration, pattern recognition, and group identification. By mastering clustering techniques, we can uncover hidden structures and relationships within data, gain valuable insights, and make informed decisions in various domains.
+
+**References**
+
+* [scikit-learn documentation](https://scikit-learn.org/stable/index.html)
+* [Iris dataset](https://archive.ics.uci.edu/ml/machine-learning-databases/iris/)
+
